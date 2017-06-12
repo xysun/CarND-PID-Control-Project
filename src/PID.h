@@ -41,6 +41,18 @@ public:
   * Calculate the total PID error.
   */
   double TotalError();
+
+  int MAX_STEP; 
+  int step; 
+
+  double d_Kp;
+
+  double best_error;
+  double best_Kp;
+
+  void reset();
+  bool is_first_run;
+  bool is_down;
 };
 
 #endif /* PID_H */

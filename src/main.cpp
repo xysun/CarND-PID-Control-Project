@@ -36,7 +36,7 @@ int main()
   // TODO: Initialize the pid variable.
   double init_Kp = -0.12;
   double init_Ki = 0; // systematic bias
-  double init_Kd = -0.82; // reduce sea sick
+  double init_Kd = -0.80; // reduce sea sick
 
   pid.Init(init_Kp, init_Ki, init_Kd);
 
@@ -62,17 +62,29 @@ int main()
           * NOTE: Feel free to play around with the throttle and speed. Maybe use
           * another PID controller to control the speed!
           */
+
           pid.UpdateError(cte);
           steer_value = pid.TotalError();
+          steer_value = fmin(steer_value, 1);
+          steer_value = fmax(steer_value, -1);
+          
+          pid.step += 1;
+          if (pid.step == pid.MAX_STEP){
+            std::cout << "lap total cte:" << pid.i_error << std::endl;
+            pid.reset();
+            std::string msg = "42[\"reset\",{}]";
+            ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+          }
           
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          //std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          //std::cout << "i_error: " << pid.i_error << std::endl;
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = 0.3;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          //std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
       } else {

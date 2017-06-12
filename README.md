@@ -5,7 +5,7 @@ Self-Driving Car Engineer Nanodegree Program
 
 ### Describe the effect each of the P, I, D components had in your implementation.
 
-The PID formulae is implemented in PID.CPP -> `TotalError()`, where following lecture, `TotalError()` is defined as: 
+The PID formula is implemented in PID.CPP -> `TotalError()`, where `TotalError()` is defined as: 
 
 ```
 Kp*p_error + Ki*i_error + Kd*d_error; // errors are positive, parameters are negative
@@ -25,13 +25,13 @@ In short, Kp helps reduce error term directly (driving back to central line); Kd
 
 The final hyperparameters were tuned by hand... 
 
-I assumed there is no systematic bias in the car so I kept Ki = 0. 
-
 I started with Kp = -1.0, Ki = 0, Kd = 0 and observed car oscillating wildly and unable to stay on track. Then I decreased Kp to -0.5 and increased Kd to 0.5 and see the difference. 
 
 After that, I gradually decreased Kp and increased Kd to find the best combination, i.e the car stays on track and keeps as stable as possible. 
 
-The final parameters are: Kp = -0.12; Kd = -0.82; Ki = 0;
+I observed that accumulated `i_error` is always positive, so I tried to introduce a very small `Ki` to counter that. However, it cauzed the problem that in later laps, because of increasing accumulated error, `Ki` is taking more weight and causing car to swing violently. 
+
+The final parameters are: Kp = -0.111; Kd = -0.786; Ki = 0;
 
 
 
