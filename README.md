@@ -1,7 +1,44 @@
 # CarND-Controls-PID
 Self-Driving Car Engineer Nanodegree Program
 
+## Reflections
+
+### Describe the effect each of the P, I, D components had in your implementation.
+
+The PID formulae is implemented in PID.CPP -> `TotalError()`, where following lecture, `TotalError()` is defined as: 
+
+```
+Kp*p_error + Ki*i_error + Kd*d_error; // errors are positive, parameters are negative
+```
+
+And error terms are updated in `UpdateError` as below: 
+
+```
+d_error = cte - p_error; // differential error
+p_error = cte; // direct proportional
+i_error += cte; // integral, accumulated error
+```
+
+In short, Kp helps reduce error term directly (driving back to central line); Kd helps smoothing the steering -- if we observe a big improvement in cte, then we should reduce steering so that we do not overshoot, and vice versa; Ki helps reduce systematic bias if any.  
+
+### Describe how the final hyperparameters were chosen.
+
+The final hyperparameters were tuned by hand... 
+
+I assumed there is no systematic bias in the car so I kept Ki = 0. 
+
+I started with Kp = -1.0, Ki = 0, Kd = 0 and observed car oscillating wildly and unable to stay on track. Then I decreased Kp to -0.5 and increased Kd to 0.5 and see the difference. 
+
+After that, I gradually decreased Kp and increased Kd to find the best combination, i.e the car stays on track and keeps as stable as possible. 
+
+The final parameters are: Kp = -0.12; Kd = -0.82; Ki = 0;
+
+
+
+
 ---
+
+Original README below
 
 ## Dependencies
 
