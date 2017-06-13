@@ -34,9 +34,9 @@ int main()
 
   PID pid;
   // TODO: Initialize the pid variable.
-  double init_Kp = -0.12;
+  double init_Kp = -0.111;
   double init_Ki = 0; // systematic bias
-  double init_Kd = -0.82; // reduce sea sick
+  double init_Kd = -0.786; // reduce sea sick
 
   pid.Init(init_Kp, init_Ki, init_Kd);
 

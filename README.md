@@ -25,16 +25,16 @@ In short, Kp helps reduce error term directly (driving back to central line); Kd
 
 The final hyperparameters were tuned by hand... 
 
-I assumed there is no systematic bias in the car so I kept Ki = 0. 
-
 I started with Kp = -1.0, Ki = 0, Kd = 0 and observed car oscillating wildly and unable to stay on track. Then I decreased Kp to -0.5 and increased Kd to 0.5 and see the difference. 
 
 After that, I gradually decreased Kp and increased Kd to find the best combination, i.e the car stays on track and keeps as stable as possible. 
 
-The final parameters are: Kp = -0.12; Kd = -0.82; Ki = 0;
+I also observed `i_error` is consistently positive, so I tried to use a very small Ki, but in later laps due to increasing accumulated error, even a very small Ki will start to bring more weight and cause the car to drift. 
 
 
+The final parameters are: Kp = -0.111; Kd = -0.786; Ki = 0;
 
+(I also attempted a grid search methodology -- see "twiddle" branch; but after a night's running, the best result is not as good as the hand tuned one...)
 
 ---
 
