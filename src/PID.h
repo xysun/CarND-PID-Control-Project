@@ -46,13 +46,17 @@ public:
   int step; 
 
   double d_Kp;
+  double d_Kd;
 
   double best_error;
   double best_Kp;
+  double best_Kd;
 
   void reset();
-  bool is_first_run;
-  bool is_down;
+
+  int i_Kp;
+  int i_Kd;
+  int max_lap;
 };
 
 #endif /* PID_H */
